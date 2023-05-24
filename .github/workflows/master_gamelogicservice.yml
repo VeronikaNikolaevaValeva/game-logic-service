@@ -1,51 +1,46 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
+name: build-and-deploy-docker-image
 
-name: Build and deploy container app to Azure Web App - gamelogicservice
-
+# Run workflow on push to main or manual trigger
 on:
   push:
-    branches:
-      - master
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: 'ubuntu-latest'
+    runs-on: ubuntu-latest
+    steps: 
+        # checkout repository to runner
+      - name: checkout repository
+        uses: actions/checkout@v3
 
-    steps:
-    - uses: actions/checkout@v2
+        # Setup docker hub credentials
+      - name: authenticate docker hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+        # Setup extended docker CLI with buildx plugin
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v2
 
-    - name: Log in to registry
-      uses: docker/login-action@v2
-      with:
-        registry: https://index.docker.io/v1/
-        username: ${{ secrets.AzureAppService_ContainerUsername_fd5fab2dc2264f94a10d4d91396eb31b }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_1b3828addf1943988d79c932a8ba6d69 }}
-
-    - name: Build and push container image to registry
-      uses: docker/build-push-action@v3
-      with:
-        push: true
-        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_fd5fab2dc2264f94a10d4d91396eb31b }}/damper7/gamelogicservice:${{ github.sha }}
-        file: ./Dockerfile
-
+        # Build docker image and push it to docker hub repository
+      - name: build and push docker image to docker hub repository
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./GameLogicService/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/gamelogicservice:${{ github.sha }}
   deploy:
     runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
+    needs: [build]
     steps:
-    - name: Deploy to Azure Web App
-      id: deploy-to-webapp
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: 'gamelogicservice'
-        slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_5afda19a933a46e19831d61fce6fd429 }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_fd5fab2dc2264f94a10d4d91396eb31b }}/damper7/gamelogicservice:${{ github.sha }}'
+        # Deploy docker hub image to azure with publish auth
+      - name: deploy to azure
+        uses: azure/webapps-deploy@v2
+        with:
+            app-name: 'gamelogicservice'
+            publish-profile: ${{ secrets.AZURE_APPSERVICE_PUBLISHPROFILE }}
+            images: 'index.docker.io/${{ secrets.DOCKERHUB_USERNAME }}/gamelogicservice:${{ github.sha }}'
