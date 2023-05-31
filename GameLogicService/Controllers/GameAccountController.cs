@@ -28,5 +28,15 @@ namespace GameLogicService.Controllers
                 return Ok(result.RejectionReason);
             return Ok(result.Data);
         }
+        
+        [HttpPost]
+        [ActionName("DeleteUser")]
+        public async Task<ActionResult<string>> DeleteUser([FromBody] DeleteAccountDataResponse deleteAccountDataResponse)
+        {
+            var result = await _gameAccountService.DeleteUser(deleteAccountDataResponse);
+            if (!result.Success && result.RejectionCode == RejectionCode.General)
+                return Ok(result.RejectionReason);
+            return Ok(result.Data);
+        }
     }
 }

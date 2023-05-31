@@ -2,17 +2,19 @@
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Net.Http.Headers;
+using GameLogicService.Models.Responses;
 
 namespace GameLogicService.RestClientRequests
 {
-    public class BaseExternalAPIRequests : IBaseExternalAPIRequests
+    public class AuthAPIRequests : IAuthAPIRequests
     {
         protected readonly HttpClient _httpClient;
         protected readonly JsonSerializerOptions _options;
 
-        public BaseExternalAPIRequests(HttpClient httpClient)
+        public AuthAPIRequests(HttpClient httpClient)
         {
             _httpClient = httpClient;
+            _httpClient.BaseAddress = new Uri("https://dev-he67eqpc846lev05.us.auth0.com/api/v2/users");
             _options = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve,
@@ -21,6 +23,20 @@ namespace GameLogicService.RestClientRequests
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
+        }
+        public async Task<bool> DeleteAuthUserData(string authId)
+        {
+            try
+            {
+             var response = await _httpClient.DeleteAsync($"/{authId}");
+             Console.WriteLine(response.StatusCode.ToString());
+            }
+            catch(Exception ex) 
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+            return true;
         }
     }
 }

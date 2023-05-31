@@ -11,14 +11,15 @@ using System.Text.Json.Serialization;
 
 namespace GameLogicService.RestClientRequests
 {
-    public class ExternalAPIRequests : IExternalAPIRequests
+    public class TriviaAPIRequests : ITriviaAPIRequests
     {
         protected readonly HttpClient _httpClient;
         protected readonly JsonSerializerOptions _options;
 
-        public ExternalAPIRequests(HttpClient httpClient)
+        public TriviaAPIRequests(HttpClient httpClient)
         {
             _httpClient = httpClient;
+            _httpClient.BaseAddress = new Uri("https://getquizgamedata.azurewebsites.net");
             _options = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve,

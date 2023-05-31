@@ -17,5 +17,12 @@ namespace GameLogicService.Services.Interfaces
         /// <returns>A message with result info</returns>
         Task<ServiceProduct<string>> ProcessUser(GameAccountResponse gameAccountResponse);
 
+        /// <summary>
+        /// A method for processing delete game account information requests.
+        /// </summary>
+        /// <param name="deleteAccountDataResponse"></param>
+        /// <returns>True if successful, false otherwise.</returns>
+        Task<ServiceProduct<bool>> DeleteUser(DeleteAccountDataResponse deleteAccountDataResponse);
+
     }
 }

@@ -15,12 +15,12 @@ namespace GameLogicService.Services
         private readonly IGameAccountRepository _gameAccountRepository;
         private readonly IGameCategoryRepository _gameCategoryRepository;
         private readonly IGameCategoryTagRepository _gameCategoryTagRepository;
-        private readonly IExternalAPIRequests _externalAPIRequests;
+        private readonly ITriviaAPIRequests _externalAPIRequests;
 
         public GameOptionsService(
             IGameOptionsRepository gameOptionsRepository,
             IGameAccountRepository gameAccountRepository,
-            IExternalAPIRequests externalAPIRequests,
+            ITriviaAPIRequests externalAPIRequests,
             IGameCategoryTagRepository gameCategoryTagRepository,
             IGameCategoryRepository gameCategoryRepository)
         {

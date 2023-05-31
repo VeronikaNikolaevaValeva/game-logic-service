@@ -20,7 +20,6 @@ builder.Services.AddScoped(sp =>
 {
     var client = new HttpClient
     {
-        BaseAddress = new Uri("https://getquizgamedata.azurewebsites.net"),
     };
     return client;
 });
@@ -48,8 +47,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 //Register Client Services
-builder.Services.AddScoped<IBaseExternalAPIRequests, BaseExternalAPIRequests>();
-builder.Services.AddScoped<IExternalAPIRequests, ExternalAPIRequests>();
+builder.Services.AddScoped<IAuthAPIRequests, AuthAPIRequests>();
+builder.Services.AddScoped<ITriviaAPIRequests, TriviaAPIRequests>();
 builder.Services.AddScoped<IMessageSender, MessageSender>();
 
 //Register Services
