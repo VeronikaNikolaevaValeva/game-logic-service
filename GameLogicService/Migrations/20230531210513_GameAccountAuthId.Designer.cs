@@ -4,6 +4,7 @@ using GameLogicService.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameLogicService.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230531210513_GameAccountAuthId")]
+    partial class GameAccountAuthId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,7 +52,7 @@ namespace GameLogicService.Migrations
                     b.ToTable("game_account", (string)null);
                 });
 
-            modelBuilder.Entity("GameLogicService.Models.Entity.GameAccountAuth", b =>
+            modelBuilder.Entity("GameLogicService.Models.Entity.GameAccountAuthId", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -62,9 +65,8 @@ namespace GameLogicService.Migrations
                         .HasColumnType("int")
                         .HasColumnName("account_id");
 
-                    b.Property<string>("AuthId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                    b.Property<int>("AuthId")
+                        .HasColumnType("int")
                         .HasColumnName("auth_id");
 
                     b.HasKey("Id");

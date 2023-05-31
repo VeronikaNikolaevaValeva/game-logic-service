@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameLogicService.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230531155621_GameAccountUpdate")]
-    partial class GameAccountUpdate
+    [Migration("20230531213337_GameAccountAuthIdd")]
+    partial class GameAccountAuthIdd
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,9 +39,6 @@ namespace GameLogicService.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("email_address");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -53,6 +50,29 @@ namespace GameLogicService.Migrations
                         .IsUnique();
 
                     b.ToTable("game_account", (string)null);
+                });
+
+            modelBuilder.Entity("GameLogicService.Models.Entity.GameAccountAuth", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int")
+                        .HasColumnName("account_id");
+
+                    b.Property<string>("AuthId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("auth_id");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("game_account_auth_id", (string)null);
                 });
 
             modelBuilder.Entity("GameLogicService.Models.Entity.GameCategory", b =>

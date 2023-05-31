@@ -17,6 +17,7 @@ namespace GameLogicService.DataContext
         public virtual DbSet<GameCategoryGameAccount> GameCategoryGameAccount { get; set; } = null!;
         public virtual DbSet<PlayedQuiz> PlayedQuiz { get; set; } = null!;
         public virtual DbSet<PlayedQuizGameAccount> PlayedQuizGameAccount { get; set; } = null!;
+        public virtual DbSet<GameAccountAuth> GameAccountAuth { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,10 +44,6 @@ namespace GameLogicService.DataContext
                 entity.Property(e => e.EmailAddress)
                     .IsRequired()
                     .HasColumnName("email_address");
-
-                entity.Property(e => e.UserId)
-                    .HasColumnName("UserId");
-
 
             });
 
@@ -175,6 +172,25 @@ namespace GameLogicService.DataContext
                 entity.Property(e => e.PlayedQuizId)
                     .IsRequired()
                     .HasColumnName("played_quiz_id");
+            });
+            
+            //Played Quiz Game Account Auth ID
+            modelBuilder.Entity<GameAccountAuth>(entity =>
+            {
+                entity.ToTable("game_account_auth_id");
+
+                entity.Property(e => e.Id)
+                   .IsRequired()
+                   .HasColumnType(IdColumnType)
+                   .HasColumnName("id");
+
+                entity.Property(e => e.AccountId)
+                    .IsRequired()
+                    .HasColumnName("account_id");
+
+                entity.Property(e => e.AuthId)
+                    .IsRequired()
+                    .HasColumnName("auth_id");
             });
         }
     }

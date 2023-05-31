@@ -65,6 +65,7 @@ builder.Services.AddScoped<IGameCategoryRepository, GameCategoryRepository>();
 builder.Services.AddScoped<IGameCategoryTagRepository, GameCategoryTagRepository>();
 builder.Services.AddScoped<IPlayedQuizRepository, PlayedQuizRepository>();
 builder.Services.AddScoped<IPlayedQuizGameAccountRepository, PlayedQuizGameAccountRepository>();
+builder.Services.AddScoped<IGameAccountAuthRepository, GameAccountAuthRepository>();
 
 var app = builder.Build();
 app.UseCors(builder =>
