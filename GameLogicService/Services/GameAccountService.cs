@@ -24,7 +24,7 @@ namespace GameLogicService.Services
 
         public async Task<ServiceProduct<string>> ProcessUser(GameAccountResponse gameAccountResponse)
         {
-            Console.WriteLine("30 userid?", gameAccountResponse.EmailAddress);
+            Console.WriteLine("27 userid?", gameAccountResponse.EmailAddress);
             var existingGameAccount = await _gameAccountRepository.GetByUsernameAndEmailAsync(gameAccountResponse.Username, gameAccountResponse.EmailAddress);
             if (existingGameAccount != null)
             {
