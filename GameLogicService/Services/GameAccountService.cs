@@ -27,10 +27,10 @@ namespace GameLogicService.Services
             var existingGameAccount = await _gameAccountRepository.GetByUsernameAndEmailAsync(gameAccountResponse.Username, gameAccountResponse.EmailAddress);
             if (existingGameAccount != null)
             {
-                Console.WriteLine(existingGameAccount.UserId);
-                Console.WriteLine(gameAccountResponse.UserId);
+                Console.WriteLine("30 userid?", existingGameAccount.UserId);
+                Console.WriteLine("31 userid?", gameAccountResponse.UserId);
                 if(String.IsNullOrEmpty(existingGameAccount.UserId) && !String.IsNullOrEmpty(gameAccountResponse.UserId)) existingGameAccount = await UpdateAuthUserID(existingGameAccount, gameAccountResponse.UserId);
-                Console.WriteLine(existingGameAccount.UserId);
+                Console.WriteLine("33 userid?", existingGameAccount.UserId);
                 SendNewUsersData(gameAccountResponse.Username, gameAccountResponse.EmailAddress);
                 return $"{gameAccountResponse.Username}, welcome back!";
             }
