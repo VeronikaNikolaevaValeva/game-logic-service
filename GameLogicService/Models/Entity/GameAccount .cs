@@ -11,6 +11,8 @@ namespace GameLogicService.Models.Entity
         //public DateTime? LastLogin { get; set; }
 
         public string? EmailAddress { get; set; }
+        
+        public string? UserId { get; set; }
 
     }
 }

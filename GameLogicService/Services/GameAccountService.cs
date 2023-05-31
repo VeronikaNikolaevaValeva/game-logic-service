@@ -26,11 +26,13 @@ namespace GameLogicService.Services
             var existingGameAccount = await _gameAccountRepository.GetByUsernameAndEmailAsync(gameAccountResponse.Username, gameAccountResponse.EmailAddress);
             if (existingGameAccount != null)
             {
+                if(existingGameAccount.UserId is null && gameAccountResponse.UserId is not null)await UpdateAuthUserID(existingGameAccount, gameAccountResponse.UserId);
                 SendNewUsersData(gameAccountResponse.Username, gameAccountResponse.EmailAddress);
                 return $"{gameAccountResponse.Username}, welcome back!";
             }
             var addNewgameAccount = await _gameAccountRepository.AddAsync(new GameAccount()
             {
+                UserId= gameAccountResponse.UserId,
                 Username = gameAccountResponse.Username,
                 EmailAddress = gameAccountResponse.EmailAddress
             });
@@ -38,6 +40,12 @@ namespace GameLogicService.Services
             SendNewUsersData(gameAccountResponse.Username, gameAccountResponse.EmailAddress);
             return $"{gameAccountResponse.Username}, welcome to the QUIZ Game!";
             
+        }
+
+        private async Task UpdateAuthUserID(GameAccount gameAccount, string userID)
+        {
+            gameAccount.UserId = userID;
+            await _gameAccountRepository.UpdateAsync(gameAccount);
         }
 
         private void SendNewUsersData(string username, string emailAddress)
