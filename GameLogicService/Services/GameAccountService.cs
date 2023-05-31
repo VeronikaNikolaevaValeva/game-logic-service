@@ -6,7 +6,6 @@ using GameLogicService.Models.Response;
 using GameLogicService.Repositories.Entity.Interfaces;
 using GameLogicService.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace GameLogicService.Services
 {
