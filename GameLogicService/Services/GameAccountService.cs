@@ -32,7 +32,7 @@ namespace GameLogicService.Services
             {
                 Console.WriteLine("30 userid?", existingGameAccount.UserId);
                 Console.WriteLine("31 userid?", gameAccountResponse.sub);
-                if(()String.IsNullOrEmpty(existingGameAccount.UserId) || existingGameAccount.UserId == "1")  && !String.IsNullOrEmpty(gameAccountResponse.sub)) existingGameAccount = await UpdateAuthUserID(existingGameAccount, gameAccountResponse.sub);
+                if((String.IsNullOrEmpty(existingGameAccount.UserId) || existingGameAccount.UserId == "1")  && !String.IsNullOrEmpty(gameAccountResponse.sub)) existingGameAccount = await UpdateAuthUserID(existingGameAccount, gameAccountResponse.sub);
                 Console.WriteLine("33 userid?", existingGameAccount.UserId);
                 SendNewUsersData(gameAccountResponse.Username, gameAccountResponse.EmailAddress);
                 return $"{gameAccountResponse.Username}, welcome back!";
