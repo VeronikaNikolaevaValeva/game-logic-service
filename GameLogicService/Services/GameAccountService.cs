@@ -6,6 +6,7 @@ using GameLogicService.Models.Response;
 using GameLogicService.Repositories.Entity.Interfaces;
 using GameLogicService.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace GameLogicService.Services
 {
@@ -27,7 +28,6 @@ namespace GameLogicService.Services
 
         public async Task<ServiceProduct<string>> ProcessUser(GameAccountResponse gameAccountResponse)
         {
-            Console.WriteLine(gameAccountResponse.userId.ToString());
             var existingGameAccount = await _gameAccountRepository.GetByUsernameAndEmailAsync(gameAccountResponse.Username, gameAccountResponse.EmailAddress);
             if (existingGameAccount != null)
             {
@@ -50,6 +50,7 @@ namespace GameLogicService.Services
 
         private async Task<GameAccountAuth> UpdateAuthUserID(int gameAccountId, string userAuthId)
         {
+            userAuthId.Skip(6);
             var result = await _gameAccountAuthRepository.AddAsync(new GameAccountAuth()
             {
                 AccountId = gameAccountId,
