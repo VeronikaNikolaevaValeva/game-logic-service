@@ -43,7 +43,11 @@ namespace GameLogicService.DataContext
                 entity.Property(e => e.EmailAddress)
                     .IsRequired()
                     .HasColumnName("email_address");
-                
+
+                entity.Property(e => e.UserId)
+                    .HasColumnName("UserId");
+
+
             });
 
             //Table Game Options
