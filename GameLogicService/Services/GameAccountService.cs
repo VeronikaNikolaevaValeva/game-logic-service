@@ -49,5 +49,16 @@ namespace GameLogicService.Services
             });
         }
 
+        //public async Task<ServiceProduct<string>> DeleteUser(GameAccountResponse gameAccountResponse)
+        //{
+
+
+        //}
+
+        //private void NotifyData(string emailAddress)
+        //{
+        //    _messageSender.DeleteUserData(emailAddress);
+        //}
+
     }
 }

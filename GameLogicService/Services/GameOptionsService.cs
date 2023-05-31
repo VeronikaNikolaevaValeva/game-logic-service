@@ -78,9 +78,13 @@ namespace GameLogicService.Services
 
         public async Task<ServiceProduct<List<GameQuestionResponse>>> GetQuizGameQuestions(GameOptionsResponse gameOptions)
         {
+            if(String.IsNullOrEmpty(gameOptions.Category)) return new List<GameQuestionResponse>();
+            var categoryId = await _gameCategoryRepository.GetCategoryIdByCategoryName(gameOptions.Category);
+            var categoryTag = await _gameCategoryTagRepository.GetByCategoryId(categoryId);
+            if(categoryTag is null) return new List<GameQuestionResponse>();
             var result = await _externalAPIRequests.GetGameQuestions(new GameOptionsExternalResponse()
             {
-                Category = gameOptions.Category,
+                Category = categoryTag.GameCategoryTagName,
                 Difficulty = gameOptions.Difficulty,
                 Amount = gameOptions.Amount
             });

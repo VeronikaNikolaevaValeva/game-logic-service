@@ -1,6 +1,7 @@
 ﻿using GameLogicService.DataContext;
 using GameLogicService.Models.Entity;
 using GameLogicService.Repositories.Entity.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameLogicService.Repositories.Entity
 {
@@ -10,6 +11,13 @@ namespace GameLogicService.Repositories.Entity
             : base(db)
         {
 
+        }
+
+        public async Task<GameCategoryTag> GetByCategoryId(int categoryId)
+        {
+            return await _db.GameCategoryTag
+                .Where(gct => gct.GameCategoryId == categoryId)
+                .FirstOrDefaultAsync();
         }
     }
 }
