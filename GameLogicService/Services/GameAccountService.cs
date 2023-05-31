@@ -27,18 +27,18 @@ namespace GameLogicService.Services
 
         public async Task<ServiceProduct<string>> ProcessUser(GameAccountResponse gameAccountResponse)
         {
+            Console.WriteLine(gameAccountResponse.sub.ToString());
             var existingGameAccount = await _gameAccountRepository.GetByUsernameAndEmailAsync(gameAccountResponse.Username, gameAccountResponse.EmailAddress);
             if (existingGameAccount != null)
             {
                 var accountAuth = await _gameAccountAuthRepository.GetByAccountIdAsync(existingGameAccount.Id);
-                if (accountAuth is null) accountAuth = await UpdateAuthUserID(existingGameAccount.Id, gameAccountResponse.sub);
+                if(accountAuth is null && !String.IsNullOrEmpty(gameAccountResponse.sub)) accountAuth = await UpdateAuthUserID(existingGameAccount.Id, gameAccountResponse.sub);
                 if(accountAuth is not null) Console.WriteLine(accountAuth.AuthId.ToString());
                 SendNewUsersData(gameAccountResponse.Username, gameAccountResponse.EmailAddress);
                 return $"{gameAccountResponse.Username}, welcome back!";
             }
             var addNewgameAccount = await _gameAccountRepository.AddAsync(new GameAccount()
             {
-                //UserId= gameAccountResponse.sub,
                 Username = gameAccountResponse.Username,
                 EmailAddress = gameAccountResponse.EmailAddress
             });
