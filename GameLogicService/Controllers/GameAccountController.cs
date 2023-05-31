@@ -23,7 +23,7 @@ namespace GameLogicService.Controllers
         [ActionName("ProcessUser")]
         public async Task<ActionResult<string>> ProcessUser([FromBody] GameAccountResponse gameAccountResponse)
         {
-            Console.WriteLine($"controller: {gameAccountResponse.UserId.ToString()}");
+            Console.WriteLine($"controller: {gameAccountResponse.sub.ToString()}");
             Console.WriteLine($"controller: {gameAccountResponse.Username.ToString()}");
             Console.WriteLine($"controller: {gameAccountResponse.EmailAddress.ToString()}");
             var result = await _gameAccountService.ProcessUser(gameAccountResponse);
