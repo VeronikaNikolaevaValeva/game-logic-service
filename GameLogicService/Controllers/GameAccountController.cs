@@ -23,6 +23,9 @@ namespace GameLogicService.Controllers
         [ActionName("ProcessUser")]
         public async Task<ActionResult<string>> ProcessUser([FromBody] GameAccountResponse gameAccountResponse)
         {
+            Console.WriteLine(gameAccountResponse.UserId.ToString());
+            Console.WriteLine(gameAccountResponse.Username.ToString());
+            Console.WriteLine(gameAccountResponse.EmailAddress.ToString());
             var result = await _gameAccountService.ProcessUser(gameAccountResponse);
             if (!result.Success && result.RejectionCode == RejectionCode.General)
                 return Ok(result.RejectionReason);
