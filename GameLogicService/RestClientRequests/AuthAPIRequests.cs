@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Net.Http.Headers;
 using GameLogicService.Models.Responses;
+using Azure;
 
 namespace GameLogicService.RestClientRequests
 {
@@ -26,6 +27,8 @@ namespace GameLogicService.RestClientRequests
         }
         public async Task<bool> DeleteAuthUserData(string authId)
         {
+            Console.WriteLine(authId.ToString());
+
             try
             {
              var response = await _httpClient.DeleteAsync($"/{authId}");
