@@ -4,16 +4,29 @@ using GameLogicService.Models.Responses;
 using GameLogicService.RestClientRequests.Interfaces;
 using RestSharp;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace GameLogicService.RestClientRequests
 {
-    public class ExternalAPIRequests : BaseExternalAPIRequests, IExternalAPIRequests
+    public class ExternalAPIRequests : IExternalAPIRequests
     {
+        protected readonly HttpClient _httpClient;
+        protected readonly JsonSerializerOptions _options;
+
         public ExternalAPIRequests(HttpClient httpClient)
-           : base(httpClient)
         {
+            _httpClient = httpClient;
+            _options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                PropertyNameCaseInsensitive = true
+            };
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         public async Task<List<GameCategoryExternalResponse>> GetGameCategories()
