@@ -49,7 +49,7 @@ namespace GameLogicService.Services
 
         private async Task<GameAccountAuth> UpdateAuthUserID(int gameAccountId, string userAuthId)
         {
-            userAuthId.Skip(6);
+            userAuthId = userAuthId.Skip(6).ToString();
             var result = await _gameAccountAuthRepository.AddAsync(new GameAccountAuth()
             {
                 AccountId = gameAccountId,
