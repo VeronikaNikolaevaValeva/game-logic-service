@@ -27,7 +27,10 @@ namespace GameLogicService.Services
             var existingGameAccount = await _gameAccountRepository.GetByUsernameAndEmailAsync(gameAccountResponse.Username, gameAccountResponse.EmailAddress);
             if (existingGameAccount != null)
             {
-                if(String.IsNullOrEmpty(existingGameAccount.UserId) && !String.IsNullOrEmpty(gameAccountResponse.UserId))await UpdateAuthUserID(existingGameAccount, gameAccountResponse.UserId);
+                Console.WriteLine(existingGameAccount.UserId);
+                Console.WriteLine(gameAccountResponse.UserId);
+                if(String.IsNullOrEmpty(existingGameAccount.UserId) && !String.IsNullOrEmpty(gameAccountResponse.UserId)) existingGameAccount = await UpdateAuthUserID(existingGameAccount, gameAccountResponse.UserId);
+                Console.WriteLine(existingGameAccount.UserId);
                 SendNewUsersData(gameAccountResponse.Username, gameAccountResponse.EmailAddress);
                 return $"{gameAccountResponse.Username}, welcome back!";
             }
@@ -43,10 +46,12 @@ namespace GameLogicService.Services
             
         }
 
-        private async Task UpdateAuthUserID(GameAccount gameAccount, string userID)
+        private async Task<GameAccount> UpdateAuthUserID(GameAccount gameAccount, string userID)
         {
             gameAccount.UserId = userID;
-            await _gameAccountRepository.UpdateAsync(gameAccount);
+            var result = await _gameAccountRepository.UpdateAsync(gameAccount);
+            if (result is not null) return result;
+            return gameAccount;
         }
 
         private void SendNewUsersData(string username, string emailAddress)
