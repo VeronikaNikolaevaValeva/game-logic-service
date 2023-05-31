@@ -5,6 +5,7 @@ using GameLogicService.Models.Messaging;
 using GameLogicService.Models.Response;
 using GameLogicService.Repositories.Entity.Interfaces;
 using GameLogicService.Services.Interfaces;
+using Microsoft.IdentityModel.Tokens;
 
 namespace GameLogicService.Services
 {
@@ -26,7 +27,7 @@ namespace GameLogicService.Services
             var existingGameAccount = await _gameAccountRepository.GetByUsernameAndEmailAsync(gameAccountResponse.Username, gameAccountResponse.EmailAddress);
             if (existingGameAccount != null)
             {
-                if(existingGameAccount.UserId is null && gameAccountResponse.UserId is not null)await UpdateAuthUserID(existingGameAccount, gameAccountResponse.UserId);
+                if(String.IsNullOrEmpty(existingGameAccount.UserId) && !String.IsNullOrEmpty(gameAccountResponse.UserId))await UpdateAuthUserID(existingGameAccount, gameAccountResponse.UserId);
                 SendNewUsersData(gameAccountResponse.Username, gameAccountResponse.EmailAddress);
                 return $"{gameAccountResponse.Username}, welcome back!";
             }
