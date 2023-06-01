@@ -29,7 +29,7 @@ namespace GameLogicService.RestClientRequests
         {
             try
             {
-                _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", string.Format("Bearer {0}", token));
+                _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("WWW-Authenticate", string.Format("Bearer {0}", token));
                 var response = await _httpClient.DeleteAsync($"users/{authId}");
              Console.WriteLine(response.StatusCode.ToString());
              Console.WriteLine(response.Content.ToString());
