@@ -16,7 +16,7 @@ namespace GameLogicService.RestClientRequests
         public AuthAPIRequests(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri("https://dev-he67eqpc846lev05.us.auth0.com/api/v2/users");
+            
             _options = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve,
@@ -26,24 +26,32 @@ namespace GameLogicService.RestClientRequests
         }
         public async Task<bool> DeleteAuthUserData(string authId, string token)
         {
-            Console.WriteLine(token.ToString());
             try
             {
+                var client = new RestClient("https://dev-he67eqpc846lev05.us.auth0.com/oauth/token");
+                var request = new RestRequest(Method.Post.ToString());
+                request.AddHeader("content-type", "application/json");
+                request.AddParameter("application/json", "{\"client_id\":\"748D2GkhkzSpr5F2Yi7DaaKSM0bgJeGk\",\"client_secret\":\"giTal7sdaGZSgwsgAwCvSgWFlyFtGHd9uZqP8OyALdkiFCjoIB6mhMt_y1VR5dnr\",\"audience\":\"https://dev-he67eqpc846lev05.us.auth0.com/api/v2/\",\"grant_type\":\"client_credentials\"}", ParameterType.RequestBody);
+                var response = client.Execute(request);
+                Console.WriteLine(response.StatusCode.ToString());
+                Console.WriteLine(response.ToString());
+
+
                 //var request = new RestRequest(Method.Patch.ToString());
                 //request.AddHeader("content-type", "application/json");
                 //request.AddHeader("authorization", $"Bearer {token}");
                 //request.AddHeader("cache-control", "no-cache");
                 //request.AddParameter("application/json", "{ \"scopes\": [ { \"value\": \"delete:users\", \"description\": \"Delete Users\" }, { \"value\": \"delete:users\", \"description\": \"Delete Users\" } ] }", ParameterType.RequestBody);
                 //var response = client.Execute(request);
-
-                _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authorization", string.Format("Bearer {0}", token));
-                _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("content-type", "application/json");
-                _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("cache-control", "no-cache");
-                var response = await _httpClient.DeleteAsync($"/{authId}");
-                Console.WriteLine(response.StatusCode.ToString());
-                Console.WriteLine(response.Content.ToString());
-                Console.WriteLine(response.Headers.ToString());
-                Console.WriteLine(response.ReasonPhrase.ToString());
+                //_httpClient.BaseAddress = new Uri($"https://dev-he67eqpc846lev05.us.auth0.com/api/v2/users/{authId}");
+                //_httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authorization", string.Format("Bearer {0}", token));
+                //_httpClient.DefaultRequestHeaders.TryAddWithoutValidation("content-type", "application/json");
+                //_httpClient.DefaultRequestHeaders.TryAddWithoutValidation("cache-control", "no-cache");
+                //var response = await _httpClient.DeleteAsync($"https://dev-he67eqpc846lev05.us.auth0.com/api/v2/users/{authId}");
+                //Console.WriteLine(response.StatusCode.ToString());
+                //Console.WriteLine(response.Content.ToString());
+                //Console.WriteLine(response.Headers.ToString());
+                //Console.WriteLine(response.ReasonPhrase.ToString());
             }
             catch(Exception ex) 
             {
