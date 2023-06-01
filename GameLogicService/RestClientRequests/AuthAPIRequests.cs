@@ -33,7 +33,7 @@ namespace GameLogicService.RestClientRequests
             {
                 using (var client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
                     client.BaseAddress = new Uri("https://dev-he67eqpc846lev05.us.auth0.com");
                     var result = await client.DeleteAsync("/api/v2/users/" + authId);
                     string resultContent = await result.Content.ReadAsStringAsync();
@@ -43,15 +43,6 @@ namespace GameLogicService.RestClientRequests
                     Console.WriteLine(resultContent.ToString());
                     Console.WriteLine(response.ToString());
                 }
-
-                //_httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authorization", string.Format("Bearer {0}", token));
-                //_httpClient.DefaultRequestHeaders.TryAddWithoutValidation("content-type", "application/json");
-                //_httpClient.DefaultRequestHeaders.TryAddWithoutValidation("cache-control", "no-cache");
-                //var response = await _httpClient.DeleteAsync($"/{authId}");
-                //Console.WriteLine(response.StatusCode.ToString());
-                //Console.WriteLine(response.Content.ToString());
-                //Console.WriteLine(response.Headers.ToString());
-                //Console.WriteLine(response.ReasonPhrase.ToString());
             }
             catch (Exception ex)
             {
