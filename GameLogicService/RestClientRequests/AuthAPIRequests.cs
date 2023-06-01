@@ -33,7 +33,7 @@ namespace GameLogicService.RestClientRequests
             try
             {
                 _httpClient.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("Bearer " + token));
+                new MediaTypeWithQualityHeaderValue("Bearer" + token));
                 var response = await _httpClient.DeleteAsync($"/{authId}");
              Console.WriteLine(response.StatusCode.ToString());
             }
