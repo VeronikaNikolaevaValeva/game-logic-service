@@ -35,7 +35,7 @@ namespace GameLogicService.RestClientRequests
                 request.AddHeader("content-type", "application/json");
                 request.AddHeader("authorization", $"Bearer {token}");
                 request.AddHeader("cache-control", "no-cache");
-                request.AddParameter("application/json", ParameterType.RequestBody);
+                request.AddParameter("application/json", "{ \"scopes\": [ { \"value\": \"delete:users\", \"description\": \"Delete Users\" }, { \"value\": \"delete:users\", \"description\": \"Delete Users\" } ] }", ParameterType.RequestBody);
                 var response = client.Execute(request);
 
 
