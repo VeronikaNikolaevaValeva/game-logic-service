@@ -28,6 +28,7 @@ namespace GameLogicService.RestClientRequests
         }
         public async Task<bool> DeleteAuthUserData(string authId, string token)
         {
+            Console.WriteLine(token.ToString());
             try
             {
                 //var client = new RestClient($"https://dev-he67eqpc846lev05.us.auth0.com/api/v2/users/{authId}");
