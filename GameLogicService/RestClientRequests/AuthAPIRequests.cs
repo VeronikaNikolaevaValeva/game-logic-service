@@ -41,7 +41,7 @@ namespace GameLogicService.RestClientRequests
                     var request = new RestRequest();
                     request.AddHeader("content-type", "application/x-www-form-urlencoded");
                     request.AddParameter("application/x-www-form-urlencoded", "grant_type=client_credentials&client_id=748D2GkhkzSpr5F2Yi7DaaKSM0bgJeGk&client_secret=giTal7sdaGZSgwsgAwCvSgWFlyFtGHd9uZqP8OyALdkiFCjoIB6mhMt_y1VR5dnr&audience=https://dev-he67eqpc846lev05.us.auth0.com/", ParameterType.RequestBody);
-                    var response = client.PostAsync(request);
+                    var response = await client.PostAsync(request);
 
                     var content = response.Content.ToString();
                     //var jsonResult = JObject.Parse(content);
