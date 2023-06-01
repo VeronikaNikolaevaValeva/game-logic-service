@@ -40,8 +40,8 @@ namespace GameLogicService.RestClientRequests
             {
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new System.Uri("https://dev-he67eqpc846lev05.us.auth0.com/");
-                    var response = await client.PostAsync("oauth/token", new FormUrlEncodedContent(
+                    //client.BaseAddress = new System.Uri("https://dev-he67eqpc846lev05.us.auth0.com/");
+                    var response = await client.PostAsync("https://dev-he67eqpc846lev05.us.auth0.com/oauth/token", new FormUrlEncodedContent(
                         new Dictionary<string, string>
                         {
                             { "grant_type", "client_credentials" },
