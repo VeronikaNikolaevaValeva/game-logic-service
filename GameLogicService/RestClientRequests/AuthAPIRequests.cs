@@ -36,6 +36,9 @@ namespace GameLogicService.RestClientRequests
                 new MediaTypeWithQualityHeaderValue("Bearer" + token));
                 var response = await _httpClient.DeleteAsync($"/{authId}");
              Console.WriteLine(response.StatusCode.ToString());
+             Console.WriteLine(response.Content.ToString());
+             Console.WriteLine(response.Headers.ToString());
+             Console.WriteLine(response.ReasonPhrase.ToString());
             }
             catch(Exception ex) 
             {
