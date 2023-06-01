@@ -8,6 +8,10 @@ using RestSharp;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
+using Azure.Core;
+using System.Net.Http;
+using System;
+using Auth0.ManagementApi;
 
 namespace GameLogicService.RestClientRequests
 {
@@ -33,15 +37,18 @@ namespace GameLogicService.RestClientRequests
             {
                 using (var client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
-                    client.BaseAddress = new Uri("https://dev-he67eqpc846lev05.us.auth0.com");
-                    var result = await client.DeleteAsync("/api/v2/users/" + authId);
-                    string resultContent = await result.Content.ReadAsStringAsync();
-                    var response = JObject.Parse(resultContent);
-                    Console.WriteLine(result.StatusCode.ToString());
-                    Console.WriteLine(result.Content.ToString());
-                    Console.WriteLine(resultContent.ToString());
-                    Console.WriteLine(response.ToString());
+                    var managementApi = new ManagementApiClient(token, new Uri("https://dev-he67eqpc846lev05.us.auth0.com/"), (IManagementConnection)client);
+                    await managementApi.Users.DeleteAsync(authId);
+
+                    //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
+                    //client.BaseAddress = new Uri("https://dev-he67eqpc846lev05.us.auth0.com");
+                    //var result = await client.DeleteAsync("/api/v2/users/" + authId);
+                    //string resultContent = await result.Content.ReadAsStringAsync();
+                    //var response = JObject.Parse(resultContent);
+                    //Console.WriteLine(result.StatusCode.ToString());
+                    //Console.WriteLine(result.Content.ToString());
+                    //Console.WriteLine(resultContent.ToString());
+                    //Console.WriteLine(response.ToString());
                 }
             }
             catch (Exception ex)
