@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Net.Http.Headers;
 using GameLogicService.Models.Responses;
 using Azure;
+using RestSharp;
 
 namespace GameLogicService.RestClientRequests
 {
@@ -29,12 +30,21 @@ namespace GameLogicService.RestClientRequests
         {
             try
             {
-                _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("WWW-Authenticate", string.Format("Bearer {0}", token));
-                var response = await _httpClient.DeleteAsync($"users/{authId}");
-             Console.WriteLine(response.StatusCode.ToString());
-             Console.WriteLine(response.Content.ToString());
-             Console.WriteLine(response.Headers.ToString());
-             Console.WriteLine(response.ReasonPhrase.ToString());
+                var client = new RestClient($"https://dev-he67eqpc846lev05.us.auth0.com/api/v2/users/{authId}");
+                var request = new RestRequest(Method.Patch.ToString());
+                request.AddHeader("content-type", "application/json");
+                request.AddHeader("authorization", $"Bearer {token}");
+                request.AddHeader("cache-control", "no-cache");
+                request.AddParameter("application/json", ParameterType.RequestBody);
+                var response = client.Execute(request);
+
+
+             //   _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("WWW-Authenticate", string.Format("Bearer {0}", token));
+             //   var response = await _httpClient.DeleteAsync($"users/{authId}");
+             //Console.WriteLine(response.StatusCode.ToString());
+             //Console.WriteLine(response.Content.ToString());
+             //Console.WriteLine(response.Headers.ToString());
+             //Console.WriteLine(response.ReasonPhrase.ToString());
             }
             catch(Exception ex) 
             {
