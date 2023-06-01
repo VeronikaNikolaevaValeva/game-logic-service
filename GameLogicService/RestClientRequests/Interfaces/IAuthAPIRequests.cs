@@ -11,6 +11,6 @@ namespace GameLogicService.RestClientRequests.Interfaces
         /// Deletes a user on demand.
         /// </summary>
         /// <returns>True if successful, false otherwise</returns>
-        Task<bool> DeleteAuthUserData(string authId);
+        Task<bool> DeleteAuthUserData(string authId, string token);
     }
 }

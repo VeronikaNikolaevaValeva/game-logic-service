@@ -25,13 +25,16 @@ namespace GameLogicService.RestClientRequests
             _httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
-        public async Task<bool> DeleteAuthUserData(string authId)
+        public async Task<bool> DeleteAuthUserData(string authId, string token)
         {
             Console.WriteLine(authId.ToString());
-
+            Console.WriteLine(token.ToString());
+    
             try
             {
-             var response = await _httpClient.DeleteAsync($"/{authId}");
+                _httpClient.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("Bearer " + token));
+                var response = await _httpClient.DeleteAsync($"/{authId}");
              Console.WriteLine(response.StatusCode.ToString());
             }
             catch(Exception ex) 

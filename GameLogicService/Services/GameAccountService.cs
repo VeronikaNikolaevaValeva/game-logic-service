@@ -78,7 +78,7 @@ namespace GameLogicService.Services
             var accountAuth = await _gameAccountAuthRepository.GetByAccountIdAsync(existingGameAccount.Id);
             if (accountAuth is not null)
             {
-                var result = await _authAPIRequests.DeleteAuthUserData(accountAuth.AuthId);
+                var result = await _authAPIRequests.DeleteAuthUserData(accountAuth.AuthId, deleteAccountDataResponse.Token);
                 return result;
             }
             return Reject<bool>(RejectionCode.General, "No such account exists.");
