@@ -32,8 +32,7 @@ namespace GameLogicService.RestClientRequests
     
             try
             {
-                _httpClient.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("Bearer" + token));
+                _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", string.Format("Bearer {0}", token));
                 var response = await _httpClient.DeleteAsync($"/{authId}");
              Console.WriteLine(response.StatusCode.ToString());
              Console.WriteLine(response.Content.ToString());
