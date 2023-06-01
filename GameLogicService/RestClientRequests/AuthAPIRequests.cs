@@ -59,7 +59,7 @@ namespace GameLogicService.RestClientRequests
                     //Console.WriteLine(mgmtToken);
                     using (var mgmtClient = new ManagementApiClient(mgmtToken, new System.Uri("https://dev-he67eqpc846lev05.us.auth0.com/api/v2")))
                     {
-                        await mgmtClient.Users.DeleteAsync(authId);
+                        await mgmtClient.Users.DeleteAsync("auth0|" + authId);
                     }
                 }
             }
