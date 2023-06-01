@@ -35,11 +35,17 @@ namespace GameLogicService.RestClientRequests
         {
             try
             {
+                var client = new RestClient("https://dev-he67eqpc846lev05.us.auth0.com/oauth/token");
+                var request = new RestRequest(Method.Post.ToString());
+                request.AddHeader("content-type", "application/json");
+                request.AddParameter("application/json", "{\"client_id\":\"5dVfPMbskP7LMi0nIXtVou5KUdxoxnSQ\",\"client_secret\":\"Uqz-umF1JmKWukJ9OY9b45vTKG5bCpgy9C7vtSAt40N-LZccZzTkpdIJzpao3KC1\",\"audience\":\"https://dev-he67eqpc846lev05.us.auth0.com/api/v2/\",\"grant_type\":\"client_credentials\"}", ParameterType.RequestBody);
+                var response = client.Execute(request);
+                Console.WriteLine(response);
 
-                var managementApi = new ManagementApiClient(token, new Uri("https://dev-he67eqpc846lev05.us.auth0.com/"), new HttpClientManagementConnection());
-                await managementApi.Users.DeleteAsync(authId);
-                using (var client = new HttpClient())
-                {
+                //var managementApi = new ManagementApiClient(token, new Uri("https://dev-he67eqpc846lev05.us.auth0.com/"), new HttpClientManagementConnection());
+                //await managementApi.Users.DeleteAsync(authId);
+                //using (var client = new HttpClient())
+                //{
                     //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
                     //client.BaseAddress = new Uri("https://dev-he67eqpc846lev05.us.auth0.com");
                     //var result = await client.DeleteAsync("/api/v2/users/" + authId);
@@ -49,7 +55,7 @@ namespace GameLogicService.RestClientRequests
                     //Console.WriteLine(result.Content.ToString());
                     //Console.WriteLine(resultContent.ToString());
                     //Console.WriteLine(response.ToString());
-                }
+                //}
             }
             catch (Exception ex)
             {
