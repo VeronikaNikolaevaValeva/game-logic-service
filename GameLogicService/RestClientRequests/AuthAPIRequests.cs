@@ -45,8 +45,8 @@ namespace GameLogicService.RestClientRequests
                         new Dictionary<string, string>
                         {
                             { "grant_type", "client_credentials" },
-                            { "client_id", "748D2GkhkzSpr5F2Yi7DaaKSM0bgJeGk" },
-                            { "client_secret", "giTal7sdaGZSgwsgAwCvSgWFlyFtGHd9uZqP8OyALdkiFCjoIB6mhMt_y1VR5dnr" },
+                            { "client_id", "UUNYRdjsEDEdm4u77jYk0elEVXn3NkdZ" },
+                            { "client_secret", "_zO7LRqCYFpdiXv4yjePH5ACzUvAo0guTwvj7BohfNpBYFAs9zGwlqTpo04lfyqA" },
                             { "audience", "https://dev-he67eqpc846lev05.us.auth0.com/api/v2/" }
                         }
                     ));
