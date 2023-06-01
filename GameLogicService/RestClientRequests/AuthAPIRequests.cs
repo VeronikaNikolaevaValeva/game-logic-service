@@ -15,7 +15,7 @@ namespace GameLogicService.RestClientRequests
         public AuthAPIRequests(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri("https://dev-he67eqpc846lev05.us.auth0.com/api/v2/users");
+            _httpClient.BaseAddress = new Uri("https://dev-he67eqpc846lev05.us.auth0.com/api/v2/");
             _options = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve,
@@ -27,13 +27,10 @@ namespace GameLogicService.RestClientRequests
         }
         public async Task<bool> DeleteAuthUserData(string authId, string token)
         {
-            Console.WriteLine(authId.ToString());
-            Console.WriteLine(token.ToString());
-    
             try
             {
                 _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", string.Format("Bearer {0}", token));
-                var response = await _httpClient.DeleteAsync($"/{authId}");
+                var response = await _httpClient.DeleteAsync($"users/{authId}");
              Console.WriteLine(response.StatusCode.ToString());
              Console.WriteLine(response.Content.ToString());
              Console.WriteLine(response.Headers.ToString());
