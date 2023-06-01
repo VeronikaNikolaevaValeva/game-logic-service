@@ -35,11 +35,11 @@ namespace GameLogicService.RestClientRequests
         {
             try
             {
+
+                var managementApi = new ManagementApiClient(token, new Uri("https://dev-he67eqpc846lev05.us.auth0.com/"), new HttpClientManagementConnection());
+                await managementApi.Users.DeleteAsync(authId);
                 using (var client = new HttpClient())
                 {
-                    var managementApi = new ManagementApiClient(token, new Uri("https://dev-he67eqpc846lev05.us.auth0.com/"), (IManagementConnection)client);
-                    await managementApi.Users.DeleteAsync(authId);
-
                     //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", token);
                     //client.BaseAddress = new Uri("https://dev-he67eqpc846lev05.us.auth0.com");
                     //var result = await client.DeleteAsync("/api/v2/users/" + authId);
