@@ -38,10 +38,10 @@ namespace GameLogicService.RestClientRequests
             {
                 using (var client = new RestClient("https://dev-he67eqpc846lev05.us.auth0.com/oauth/token"))
                 {
-                    var request = new RestRequest(Method.Post.ToString());
+                    var request = new RestRequest();
                     request.AddHeader("content-type", "application/x-www-form-urlencoded");
-                    request.AddParameter("application/x-www-form-urlencoded", "grant_type=client_credentials&client_id=748D2GkhkzSpr5F2Yi7DaaKSM0bgJeGk&client_secret=%7BgiTal7sdaGZSgwsgAwCvSgWFlyFtGHd9uZqP8OyALdkiFCjoIB6mhMt_y1VR5dnr%7D&audience=https%3A%2F%2Fdev-he67eqpc846lev05.us.auth0.com%2Fapi%2Fv2%2F", ParameterType.RequestBody);
-                    var response = client.Execute(request);
+                    request.AddParameter("application/x-www-form-urlencoded", "grant_type=client_credentials&client_id=748D2GkhkzSpr5F2Yi7DaaKSM0bgJeGk&client_secret=giTal7sdaGZSgwsgAwCvSgWFlyFtGHd9uZqP8OyALdkiFCjoIB6mhMt_y1VR5dnr&audience=https://dev-he67eqpc846lev05.us.auth0.com/", ParameterType.RequestBody);
+                    var response = client.PostAsync(request);
 
                     var content = response.Content.ToString();
                     //var jsonResult = JObject.Parse(content);
