@@ -98,7 +98,7 @@ namespace GameLogicService.Messaging
         {
             byte[] body = e.Body.ToArray();
             string message = Encoding.Unicode.GetString(body);
-            Console.WriteLine(message);
+            Console.WriteLine("Any messages about deleted users?: " + message);
             deletionResult = JsonSerializer.Deserialize<bool>(message);
         }
     }
