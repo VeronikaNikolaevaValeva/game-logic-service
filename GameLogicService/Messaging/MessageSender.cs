@@ -59,47 +59,47 @@ namespace GameLogicService.Messaging
             }
         }
 
-        public void DeleteUserData(string emailAddress)
-        {
-            using (IConnection connection = connectionFactory.CreateConnection())
-            {
-                IModel channel = connection.CreateModel();
-                channel.ExchangeDeclare("DeleteUserExchange", ExchangeType.Topic, true);
+        //public void DeleteUserData(string emailAddress)
+        //{
+        //    using (IConnection connection = connectionFactory.CreateConnection())
+        //    {
+        //        IModel channel = connection.CreateModel();
+        //        channel.ExchangeDeclare("DeleteUserExchange", ExchangeType.Topic, true);
 
-                var options = new JsonSerializerOptions
-                {
-                    WriteIndented = true
-                };
-                var jsonString = JsonSerializer.Serialize(emailAddress, options);
-                byte[] body = Encoding.Unicode.GetBytes(jsonString);
-                Console.WriteLine(body);
-                channel.BasicPublish("DeleteUserExchange", "DeleteUserRoutingKey", null, body);
-            }
-        }
+        //        var options = new JsonSerializerOptions
+        //        {
+        //            WriteIndented = true
+        //        };
+        //        var jsonString = JsonSerializer.Serialize(emailAddress, options);
+        //        byte[] body = Encoding.Unicode.GetBytes(jsonString);
+        //        Console.WriteLine(body);
+        //        channel.BasicPublish("DeleteUserExchange", "DeleteUserRoutingKey", null, body);
+        //    }
+        //}
 
-        public bool DeletedUserData()
-        {
-            using (IConnection connection = connectionFactory.CreateConnection())
-            {
-                IModel channel = connection.CreateModel();
-                channel.ExchangeDeclare("DeletedUserExchange", ExchangeType.Topic, true);
+        //public bool DeletedUserData()
+        //{
+        //    using (IConnection connection = connectionFactory.CreateConnection())
+        //    {
+        //        IModel channel = connection.CreateModel();
+        //        channel.ExchangeDeclare("DeletedUserExchange", ExchangeType.Topic, true);
 
-                channel.QueueDeclare("DeletedUserQueue", true, false, false, null);
-                channel.QueueBind("DeletedUserQueue", "DeletedUserExchange", "DeletedUserRoutingKey");
+        //        channel.QueueDeclare("DeletedUserQueue", true, false, false, null);
+        //        channel.QueueBind("DeletedUserQueue", "DeletedUserExchange", "DeletedUserRoutingKey");
 
-                var consumer = new EventingBasicConsumer(channel);
-                consumer.Received += Consumer_Received_DeleteUserData;
-                channel.BasicConsume("DeletedUserQueue", true, consumer);
-            }
-            return deletionResult;
-        }
+        //        var consumer = new EventingBasicConsumer(channel);
+        //        consumer.Received += Consumer_Received_DeleteUserData;
+        //        channel.BasicConsume("DeletedUserQueue", true, consumer);
+        //    }
+        //    return deletionResult;
+        //}
 
-        private void Consumer_Received_DeleteUserData(object? sender, BasicDeliverEventArgs e)
-        {
-            byte[] body = e.Body.ToArray();
-            string message = Encoding.Unicode.GetString(body);
-            Console.WriteLine("Any messages about deleted users?: " + message);
-            deletionResult = JsonSerializer.Deserialize<bool>(message);
-        }
+        //private void Consumer_Received_DeleteUserData(object? sender, BasicDeliverEventArgs e)
+        //{
+        //    byte[] body = e.Body.ToArray();
+        //    string message = Encoding.Unicode.GetString(body);
+        //    Console.WriteLine("Any messages about deleted users?: " + message);
+        //    deletionResult = JsonSerializer.Deserialize<bool>(message);
+        //}
     }
 }

@@ -46,7 +46,6 @@ namespace GameLogicService.RestClientRequests
                     var jsonResult = JObject.Parse(content);
                     var mgmtToken = jsonResult["access_token"].Value<string>();
 
-                    Console.WriteLine(mgmtToken);
                     using (var mgmtClient = new ManagementApiClient(mgmtToken, new System.Uri("https://dev-he67eqpc846lev05.us.auth0.com/api/v2")))
                     {
                         await mgmtClient.Users.DeleteAsync(authId);
