@@ -76,18 +76,23 @@ namespace GameLogicService.Services
             var existingGameAccount = await _gameAccountRepository.GetByUsernameAndEmailAsync(deleteAccountDataResponse.Username, deleteAccountDataResponse.EmailAddress);
             if (existingGameAccount is null) return Reject<bool>(RejectionCode.General, "No such account exists.");
             var accountAuth = await _gameAccountAuthRepository.GetByAccountIdAsync(existingGameAccount.Id);
-            if (accountAuth is not null)
-            {
-                var result = await _authAPIRequests.DeleteAuthUserData(accountAuth.AuthId);
-                return result;
-            }
-            return Reject<bool>(RejectionCode.General, "No such account exists.");
+            if (accountAuth is null) return Reject<bool>(RejectionCode.General, "No such account exists.");
+            NotifyData(deleteAccountDataResponse.EmailAddress);
+            await Task.Delay(5000);
+            var deletionResult = _messageSender.DeletedUserData();
+            if (!deletionResult) return Reject<bool>(RejectionCode.General, "Could not delete user. Please try again later.");
+
+            var auth0DeletionResult = await _authAPIRequests.DeleteAuthUserData(accountAuth.AuthId);
+            if(!auth0DeletionResult) return Reject<bool>(RejectionCode.General, "Could not delete user. Please try again later.");
+
+            var gameAccountDeletionResult = await _gameAccountRepository.DeleteAsync(existingGameAccount.Id);
+            if (!gameAccountDeletionResult) return Reject<bool>(RejectionCode.General, "Could not delete user. Please try again later.");
+            return true;
         }
 
-        //private void NotifyData(string emailAddress)
-        //{
-        //    _messageSender.DeleteUserData(emailAddress);
-        //}
-
+        private void NotifyData(string emailAddress)
+        {
+            _messageSender.DeleteUserData(emailAddress);
+        }
     }
 }
