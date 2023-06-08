@@ -77,19 +77,19 @@ namespace GameLogicService.Services
         public async Task<ServiceProduct<bool>> DeleteUser(DeleteAccountDataResponse deleteAccountDataResponse)
         {
             var existingGameAccount = await _gameAccountRepository.GetByUsernameAndEmailAsync(deleteAccountDataResponse.Username, deleteAccountDataResponse.EmailAddress);
-            if (existingGameAccount is null) return Reject<bool>(RejectionCode.General, "No such account exists.");
+            if (existingGameAccount is null) return Reject<bool>(RejectionCode.General, "No such account exists in game logic service.");
             var accountAuth = await _gameAccountAuthRepository.GetByAccountIdAsync(existingGameAccount.Id);
-            if (accountAuth is null) return Reject<bool>(RejectionCode.General, "No such account exists.");
+            if (accountAuth is null) return Reject<bool>(RejectionCode.General, "No such account exists in auth0.");
 
             var deletionResult = await _deleteUserDataAPIRequests.DeleteUserData(deleteAccountDataResponse.EmailAddress);
-            if (String.IsNullOrEmpty(deletionResult) || deletionResult == "true") return Reject<bool>(RejectionCode.General, "Could not delete user. Please try again later.");
+            if (String.IsNullOrEmpty(deletionResult) || deletionResult == "true") return Reject<bool>(RejectionCode.General, "Could not delete user from game scoreboard service");
             //NotifyDeleteUserData(deleteAccountDataResponse.EmailAddress);
 
             var auth0DeletionResult = await _authAPIRequests.DeleteAuthUserData(accountAuth.AuthId);
-            if(!auth0DeletionResult) return Reject<bool>(RejectionCode.General, "Could not delete user. Please try again later.");
+            if(!auth0DeletionResult) return Reject<bool>(RejectionCode.General, "Could not delete user from auth0");
 
             var gameAccountDeletionResult = await _gameAccountRepository.DeleteAsync(existingGameAccount.Id);
-            if (!gameAccountDeletionResult) return Reject<bool>(RejectionCode.General, "Could not delete user. Please try again later.");
+            if (!gameAccountDeletionResult) return Reject<bool>(RejectionCode.General, "Could not delete user from game logic service");
             return true;
         }
 
