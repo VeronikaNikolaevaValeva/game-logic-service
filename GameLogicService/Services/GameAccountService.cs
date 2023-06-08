@@ -83,6 +83,7 @@ namespace GameLogicService.Services
 
             var deletionResult = await _deleteUserDataAPIRequests.DeleteUserData(deleteAccountDataResponse.EmailAddress);
             if (String.IsNullOrEmpty(deletionResult) || deletionResult == "true") return Reject<bool>(RejectionCode.General, "Could not delete user. Please try again later.");
+            //NotifyDeleteUserData(deleteAccountDataResponse.EmailAddress);
 
             var auth0DeletionResult = await _authAPIRequests.DeleteAuthUserData(accountAuth.AuthId);
             if(!auth0DeletionResult) return Reject<bool>(RejectionCode.General, "Could not delete user. Please try again later.");
@@ -92,9 +93,9 @@ namespace GameLogicService.Services
             return true;
         }
 
-        //private void NotifyData(string emailAddress)
-        //{
-        //    _messageSender.DeleteUserData(emailAddress);
-        //}
+        private void NotifyDeleteUserData(string emailAddress)
+        {
+            _messageSender.DeleteUserData(emailAddress);
+        }
     }
 }

@@ -20,15 +20,15 @@ namespace GameLogicService.Messaging.Interfaces
         /// <returns>True - if data was send successfully, false otherwise</returns>
         void UpdateUserScore(UpdateUserScore updateUserScore);
 
-        ///// <summary>
-        ///// Indicate to the game scoreboard service that the user under that email address has to be deleted
-        ///// <param name="emailAddress"></param>
-        //void DeleteUserData(string emailAddress);
+        /// <summary>
+        /// Indicate to the game scoreboard service that the user under that email address has to be deleted
+        /// <param name="emailAddress"></param>
+        void DeleteUserData(string emailAddress);
 
-        ///// <summary>
-        ///// Check if any users have been successfully deleted. 
-        ///// <param name="accountData"></param>
-        ///// <returns>True - if data was send successfully, false otherwise</returns>
-        //bool DeletedUserData();
+        /// <summary>
+        /// Check if any users have been successfully deleted. 
+        /// <param name="accountData"></param>
+        /// <returns>True - if data was send successfully, false otherwise</returns>
+        bool DeletedUserData();
     }
 }
