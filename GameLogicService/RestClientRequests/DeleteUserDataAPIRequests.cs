@@ -16,7 +16,7 @@ namespace GameLogicService.RestClientRequests
         public DeleteUserDataAPIRequests(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri("https://game-scoreboard.azurewebsites.net");
+            _httpClient.BaseAddress = new Uri("https://gamescoreabordservice.azurewebsites.net");
             _options = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve,
