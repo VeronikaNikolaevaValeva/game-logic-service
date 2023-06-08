@@ -49,6 +49,7 @@ builder.Services.AddEndpointsApiExplorer();
 //Register Client Services
 builder.Services.AddScoped<IAuthAPIRequests, AuthAPIRequests>();
 builder.Services.AddScoped<ITriviaAPIRequests, TriviaAPIRequests>();
+builder.Services.AddScoped<IDeleteUserDataAPIRequests, DeleteUserDataAPIRequests>();
 builder.Services.AddScoped<IMessageSender, MessageSender>();
 
 //Register Services
