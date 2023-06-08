@@ -32,13 +32,14 @@ namespace GameLogicService.RestClientRequests
             var jsonRequestBody = JsonSerializer.Serialize(emailAddress);
             var httpContent = new StringContent(jsonRequestBody.ToLower(), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync($"/api/DeleteUser/DeleteUserInfo", httpContent);
-            string json = await response.Content.ReadAsStringAsync();
-            var options = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            };
-            var quizResults = JsonSerializer.Deserialize<string>(json, options);
-            return quizResults ?? String.Empty;
+            string responseString = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(responseString);
+            //var options = new JsonSerializerOptions
+            //{
+            //    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            //};
+            //var quizResults = JsonSerializer.Deserialize<string>(json, options);
+            return responseString ?? String.Empty;
         }
     }
 }
