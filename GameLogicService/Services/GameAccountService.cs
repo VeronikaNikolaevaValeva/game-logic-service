@@ -81,8 +81,8 @@ namespace GameLogicService.Services
             var accountAuth = await _gameAccountAuthRepository.GetByAccountIdAsync(existingGameAccount.Id);
             if (accountAuth is null) return Reject<bool>(RejectionCode.General, "No such account exists in auth0.");
 
-            //var deletionResult = await _deleteUserDataAPIRequests.DeleteUserData(deleteAccountDataResponse.EmailAddress);
-            //if (String.IsNullOrEmpty(deletionResult) || deletionResult == "true") return Reject<bool>(RejectionCode.General, "Could not delete user from game scoreboard service");
+            var deletionResult = await _deleteUserDataAPIRequests.DeleteUserData(deleteAccountDataResponse.EmailAddress);
+            if (String.IsNullOrEmpty(deletionResult) || deletionResult == "true") return Reject<bool>(RejectionCode.General, "Could not delete user from game scoreboard service");
             ////NotifyDeleteUserData(deleteAccountDataResponse.EmailAddress);
 
             var auth0DeletionResult = await _authAPIRequests.DeleteAuthUserData(accountAuth.AuthId);
